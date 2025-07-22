@@ -27,12 +27,7 @@ async def recode(
     # Depends ruft jetzt unsere neue Getter-Funktion auf
     service: ArticleService = Depends(get_article_service)
 ):
-    print("--- 1. Recode-Endpunkt aufgerufen ---") # Hinzufügen
-    prompt_path = Path(__file__).parent / "prompts" / "prompt.txt"
-    prompt_text = prompt_path.read_text(encoding="utf-8")
 
-    print("--- 2. Rufe jetzt den ArticleService auf ---") # Hinzufügen
-    result = await service.process_article(article.model_dump(), prompt_text)
+    result = await service.process_article(article.model_dump())
     
-    print("--- 4. ArticleService hat geantwortet ---") # Hinzufügen
     return result

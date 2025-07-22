@@ -7,7 +7,7 @@ class ArticleInput(BaseModel):
     Text: str | None = None
 
 class ArticleOutput(BaseModel):
-    artikel_id: int
+    artikel_id: str
     personen: list[str]
     organisationen: list[str]
     regionen: list[str]

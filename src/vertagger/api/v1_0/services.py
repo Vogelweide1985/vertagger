@@ -1,14 +1,30 @@
 import json
 from openai import AsyncOpenAI, RateLimitError
 from fastapi import HTTPException
+from pathlib import Path
 
+CURRENT_DIR = Path(__file__).parent
 
 class ArticleService:
     def __init__(self, client: AsyncOpenAI, model: str):
         self.client = client
         self.model = model
 
-    async def process_article(self, article_data: dict, prompt: str) -> dict:
+    def _load_prompt(self) -> str:
+        """Lädt den Prompt aus der lokalen prompts/prompt.txt Datei."""
+        try:
+            prompt_path = CURRENT_DIR / "prompts" / "prompt.txt"
+            return prompt_path.read_text(encoding="utf-8")
+        except FileNotFoundError:
+            # Dieser Fehler ist kritisch, da der Service ohne Prompt nicht arbeiten kann
+            raise HTTPException(status_code=500, detail="Prompt-Datei für diesen Service nicht gefunden.")
+
+
+    async def process_article(self, article_data: dict) -> dict:
+        """Verarbeitet Artikel mit der Logik und dem Modell für v1.0."""
+        
+        # Lade den Prompt direkt hier
+        prompt = self._load_prompt()
 
         input_text = f"Artikel-Daten: {json.dumps(article_data)}"
         
