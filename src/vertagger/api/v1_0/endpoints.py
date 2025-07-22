@@ -17,9 +17,10 @@ def get_article_service(request: Request) -> ArticleService:
     
     # 2. Hole das versions-spezifische Modell aus der lokalen Config
     model_name: str = v1_config.gpt_model
+    temp: float = v1_config.temperature
     
     # 3. Erstelle den Service mit beiden Argumenten
-    return ArticleService(client=client, model=model_name)
+    return ArticleService(client=client, model=model_name, temperature=temp)
 
 @router.post("/recode", response_model=ArticleOutput)
 async def recode(

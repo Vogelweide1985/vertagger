@@ -4,6 +4,7 @@ from pydantic import BaseModel
 class VersionConfig(BaseModel):
 
     gpt_model: str = "gpt-4o"
+    temperature: float = 0.0
 
 # Wir erstellen eine Instanz, die wir im v1_0-Modul verwenden können
 v1_config = VersionConfig()

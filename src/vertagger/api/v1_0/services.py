@@ -6,9 +6,10 @@ from pathlib import Path
 CURRENT_DIR = Path(__file__).parent
 
 class ArticleService:
-    def __init__(self, client: AsyncOpenAI, model: str):
+    def __init__(self, client: AsyncOpenAI, model: str, temperature: float):
         self.client = client
         self.model = model
+        self.temperature = temperature 
 
     def _load_prompt(self) -> str:
         """Lädt den Prompt aus der lokalen prompts/prompt.txt Datei."""
@@ -35,7 +36,7 @@ class ArticleService:
                     {"role": "system", "content": prompt},
                     {"role": "user", "content": input_text}
                 ],
-                temperature=0,
+                temperature=self.temperature,
                 response_format={"type": "json_object"}
             )
         except RateLimitError:
