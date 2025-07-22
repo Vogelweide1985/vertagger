@@ -1,22 +1,33 @@
-**** Formatvorgabe ****
-
-Achte auf konsistente und vollständige Befüllung der Felder entsprechend der vorgefundenen Inhalte.
-Hier ist das erforderte JSON-Zielformat mit Beispiel Text:
-
-{
-    "personen": ["Brack Obama", "Angela Merkel", "Dr. David Precht"],
-    "organisationen": ["Umweltbundesamt", "Evonik", "Eintracht Frankfurt"]
-    "regionen": ["Rheinland-Pfalz", "Cochem", "Weingebiet"],
-    "stichwoerter": ["Digitalisierung", "Mittelstand", "Wachstum"],
-    "zusammenfassung": "Eine Zusammenfassung über mehrere Sätze ....",
-    "userneeds": "Inspirieren",
-    "lebenswelt": "Familien / Eltern",
-    "lebenswelt_anteile": [70,20,5,5,0,0,0],
-    "iab_content_taxonomy": "150",
-}
+**** FINALE ANWEISUNG: AUSGABEFORMAT ****
 
 
-Erzeuge jetzt für den Inhalt das vollständige JSON nach diesen Vorgaben.
-Antworte NUR mit dem finalen JSON ohne zusätzliche Erklärungen, Einleitungen oder Codeblöcke.
 
-**** Formatvorgabe ENDE ****
+    Ziel: Gib deine gesamte Analyse als ein einziges, valides JSON-Objekt zurück.
+
+    Regeln:
+
+        Deine Antwort darf AUSSCHLIESSLICH das JSON-Objekt enthalten.
+
+        Füge keine Einleitungen, Erklärungen, Code-Block-Markierungen (wie ```json) oder sonstige Texte vor oder nach dem JSON hinzu.
+
+        Stelle sicher, dass alle Felder aus dem unten stehenden Beispielformat vorhanden sind.
+
+        Stelle sicher, dass alle Strings korrekt mit doppelten Anführungszeichen umschlossen sind und das gesamte JSON valide ist.
+
+    Beispiel für das Zielformat:
+
+    {
+        "personen": ["Barack Obama", "Angela Merkel"],
+        "organisationen": ["Umweltbundesamt", "Eintracht Frankfurt"],
+        "regionen": ["Rheinland-Pfalz", "Cochem"],
+        "stichwoerter": ["Digitalisierung", "Wachstum"],
+        "zusammenfassung": "Eine neutrale Zusammenfassung, die aus drei bis fünf Sätzen besteht und die Kernaussagen des Artikels wiedergibt.",
+        "userneeds": "Einordnen",
+        "lebenswelt": "Beruflich Engagierte / Entscheider",
+        "lebenswelt_anteile": [10, 70, 10, 5, 5, 0, 0],
+        "iab_content_taxonomy": "52"
+    }
+
+    Führe nun die Analyse des vom Benutzer bereitgestellten Artikels durch und erzeuge das JSON-Objekt.
+
+**** AUSGABEFORMAT ENDE ****

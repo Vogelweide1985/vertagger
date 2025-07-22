@@ -1,7 +1,19 @@
 
 **** Kodieranweisung 'personen' ****
 
-Eine Liste von max. fünf Personen [ ... ] oder eine leere Liste [].
+Feld: "personen"
+
+    Ziel: Extrahiere die bis zu fünf wichtigsten Personen, die im Artikel namentlich genannt werden.
+
+    Regeln:
+
+        Gib eine Liste von Strings zurück: ["Vorname Nachname", ...]
+
+        Die Liste darf maximal 5 Einträge enthalten.
+
+        Wenn keine Personen relevant sind oder genannt werden, gib eine leere Liste [] zurück.
+
+        Gib nur die Namen an, ohne Titel (wie "Dr.") oder zusätzliche Informationen.
 
 **** Kodieranweisung 'personen' ENDE ****
 

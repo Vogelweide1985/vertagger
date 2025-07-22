@@ -3,65 +3,85 @@
 
 **** Kodieranweisung 'lebenswelt' und 'lebenswelt_anteile ****
 
-'lebenswelt': 
-Bestimme Eine der sieben möglichen Lebenswelt-Kategorien, die der Artikel anspricht.
-Hier sind die Eigenschaften / Mermkale der sieben Lebenswelten. 
+FELDER: "lebenswelt" und "lebenswelt_anteile"
+ANWEISUNG FÜR "lebenswelt":
 
-1. "Junge Erwachsene / Studierende"
+    Ziel: Identifiziere die primäre und dominanteste Lebenswelt, die der Artikelinhalt anspricht.
 
-    Alter: ca. 18–30
-    Merkmale: Mobil, digitalaffin, auf der Suche nach Orientierung, am Anfang des Berufslebens oder im Studium
-    Interessen: Ausbildung, Karriere, Wohnen, Kultur, Nachtleben, Nachhaltigkeit, Digitalisierung, gesellschaftlicher Wandel
-    Relevante Inhalte: Praktika, Events, Freizeit, Porträts junger Menschen, Bildungspolitik, Start-ups
+    Regeln:
 
+        Wähle exakt EINE der sieben unten definierten Kategorien.
 
-2. "Beruflich Engagierte / Entscheider"
+        Gib den vollständigen Namen der Kategorie als String zurück (z.B. "Junge Erwachsene in Ausbildung & Berufseinstieg").
 
-    Alter: ca. 30–60
-    Merkmale: Beruflich aktiv, leistungsorientiert, in Verantwortung (Führung, Selbstständigkeit), informiert, oft wenig Zeit
-    Interessen: Politik, Wirtschaft, Gesellschaft, Digitalisierung, Bildung, Infrastruktur, Gesundheitssystem
-    Relevante Inhalte: Interviews, Hintergrundberichte, Analysen, systemrelevante Debatten, Business-News, Meinungsstücke
+ANWEISUNG FÜR "lebenswelt_anteile":
 
+    Ziel: Schätze die prozentuale Relevanz des Artikels für jede der sieben Lebenswelten.
 
-3. "Familien / Eltern"
+    Regeln:
 
-    Alter: ca. 30–50
-    Merkmale: Verantwortlich für Kinder, Alltagsorganisation, berufliche und private Vereinbarkeit
-    Interessen: Schule, Kitas, Gesundheit, Sicherheit, Mobilität, Freizeitangebote, regionale Infrastruktur
-    Relevante Inhalte: Lokalpolitik mit Familienbezug, Ratgeber, Veranstaltungen, Erziehung, Gesundheit
+        Gib eine Liste mit sieben Ganzzahlen (Integer) zurück.
 
-4. "Senioren / Ruheständler"
+        Die Summe aller sieben Zahlen muss exakt 100 ergeben.
 
-    Alter: 60+
-    Merkmale: Zeit für Lektüre, stark lokal verwurzelt, hohe Loyalität zur Tageszeitung, interessiert an Regionalgeschichte und lokaler Entwicklung
-    Interessen: Rente, Pflege, Gesundheit, Nachbarschaft, Ehrenamt, Heimatgeschichte
-    Relevante Inhalte: Porträts, Vereinsleben, Leserbriefe, Kommentare, gesundheitliche Vorsorge
+        Die Reihenfolge in der Liste muss exakt der unten stehenden Reihenfolge der Lebenswelten entsprechen.
 
-5. "Sinnsuchende / Werteorientierte"
+        Beispiel: [10, 20, 50, 5, 5, 10, 0]
 
-    Alter: Quer durch alle Generationen
-    Merkmale: Orientierung an ethischen, ökologischen, sozialen oder spirituellen Werten – oft engagiert, reflektiert, bildungsnah
-    Interessen: Nachhaltigkeit, Zusammenhalt, Achtsamkeit, Inklusion, gesellschaftliche Entwicklung, Zukunftsthemen
-    Relevante Inhalte: Interviews, Essays, Portraits, tiefgründige Reportagen, Veranstaltungsformate wie Lesungen, Diskussionen
+MODELLBESCHREIBUNG: LEBENSWELTEN
+1. "Junge Erwachsene in Ausbildung & Berufseinstieg"
 
-6. "Gesundheitsinteressierte"
+    Kerndefinition: Personen in der Übergangsphase zwischen Ausbildung/Studium und der Etablierung im Berufsleben (ca. 18-30 Jahre). Geprägt von persönlicher und beruflicher Orientierung, hoher digitaler Affinität und dem Wunsch nach gesellschaftlicher Teilhabe.
 
-    Alter: meist 30+, oft auch Senioren
-    Merkmale: Präventionsorientiert, gesundheitsbewusst, kritisch gegenüber Systemen, oft eigene oder familiäre Erfahrungen mit Krankheiten
-    Interessen: Ernährung, Bewegung, Gesundheitsversorgung, Pflege, Krankenkassen, Prävention
-    Relevante Inhalte: Medizintrends, Patientengeschichten, Systemkritik, Interviews mit Ärzt:innen, Ratgeber
+    Informationsbedarf & Motivation: Suchen nach Orientierung, praktischem Nutzen und Inspiration für ihre Zukunftsgestaltung. Reagieren auf Themen, die ihre unmittelbare Lebensrealität betreffen: Karriere, Finanzen, Wohnen, soziale Kontakte und Selbstverwirklichung.
 
-7. "Kulturell Interessierte / Bildungsbürger"
+    Typische Themen & Formate: Ratgeber zum Berufseinstieg, Analysen des Wohnungsmarktes, Porträts von Gründern, Berichte über Bildungspolitik, Event- und Kulturtipps, Debatten über Nachhaltigkeit und sozialen Wandel.
 
-    Alter: meist 40+, aber auch jünger
-    Merkmale: Interesse an Literatur, Theater, Musik, Geschichte, Philosophie, Politik – häufig Abonnenten
-    Interessen: Kulturveranstaltungen, Lesungen, Rezensionen, Interviews, Hintergrundberichte, Regionalgeschichte
-    Relevante Inhalte: Kulturelle Veranstaltungsberichterstattung, Interviews mit Künstler:innen, Theater- und Literaturkritiken
+2. "Beruflich Etablierte & Entscheider"
 
-'lebenswelt_anteile': 
-Gebe für jede Lebenswelt einen Ganzzahligen Wert zwischen 0 und 100 an. 
-Dieser sagt aus, wie relevant der Artikel für die jeweilige Lebenswelt. Alle 7 Werte müssen 100 ergeben.
-Das Ergebnis ist eine Liste mit sieben Einträgen. Die Reihenfolge der Lebenswelten ist wie oben definiert. 
-Beispiel Output : [65,25,10,0,0,0,0]  oder [55,30,8,4,2,1,0]
+    Kerndefinition: Leistungsorientierte Personen (ca. 30-60 Jahre), die fest im Berufsleben stehen, oft in verantwortungsvollen Positionen. Ihr Alltag ist durch Effizienz, strategisches Denken und einen hohen Informationsbedarf geprägt.
 
+    Informationsbedarf & Motivation: Benötigen entscheidungsrelevante Informationen, um im beruflichen und privaten Kontext fundierte Urteile zu fällen. Suchen nach tiefgehenden Analysen, exklusiven Einblicken und Meinungsstücken, die über die reine Nachrichtenmeldung hinausgehen.
+
+    Typische Themen & Formate: Wirtschaftsanalysen, politische Hintergrundberichte, Interviews mit Führungskräften, Kommentare zu gesellschaftlichen Debatten, Artikel über Managementstrategien, Innovation und Technologie.
+
+3. "Familien & Organisatoren des Alltags"
+
+    Kerndefinition: Personen (ca. 30-50 Jahre), deren Lebensfokus auf der Organisation des Familienalltags und der Vereinbarkeit von Beruf und Privatleben liegt. Ihr Handeln ist stark von der Verantwortung für Kinder und Angehörige geprägt.
+
+    Informationsbedarf & Motivation: Suchen nach serviceorientierten, lösungsorientierten und direkt anwendbaren Informationen, die ihren Alltag erleichtern und die Entwicklung ihrer Kinder unterstützen. Hohe Relevanz von lokalen und regionalen Themen.
+
+    Typische Themen & Formate: Berichte über Schul- und Kitapolitik, Gesundheits- und Erziehungsratgeber, Freizeittipps für Familien, Tests von Produkten, Artikel über Sicherheit im Wohnumfeld und Mobilität.
+
+4. "Senioren & lokal Verwurzelte"
+
+    Kerndefinition: Personen im Ruhestand oder kurz davor (60+), die oft über mehr Zeit für Medienkonsum verfügen und eine starke Bindung zu ihrer Heimatregion haben. Sie sind an Kontinuität, lokaler Gemeinschaft und bewährten Werten interessiert.
+
+    Informationsbedarf & Motivation: Suchen nach Inhalten, die ihre Lebensleistung würdigen, Orientierung in Gesundheits- und Finanzfragen bieten und das soziale Miteinander in der Nachbarschaft stärken. Hohes Interesse an Heimatgeschichte und lokaler Politik.
+
+    Typische Themen & Formate: Porträts von Vereinen und Ehrenamtlichen, Berichte aus den Stadträten, Gesundheitsvorsorge, Renten- und Pflegethemen, Leserbriefe, historische Rückblicke, Kommentare zum lokalen Geschehen.
+
+5. "Werteorientierte & Sinnsuchende"
+
+    Kerndefinition: Altersunabhängige Gruppe, die ihr Handeln und ihre Interessen stark an ethischen, sozialen oder ökologischen Werten ausrichtet. Sie sind oft gesellschaftlich engagiert, reflektiert und suchen nach tieferem Sinn und nachhaltigen Lösungen.
+
+    Informationsbedarf & Motivation: Suchen nach Inhalten, die über materielle und oberflächliche Themen hinausgehen. Wollen die Welt verstehen und verbessern. Interessieren sich für gesellschaftlichen Zusammenhalt, Nachhaltigkeit, persönliche Weiterentwicklung und globale Gerechtigkeit.
+
+    Typische Themen & Formate: Tiefgründige Reportagen über soziale Projekte, Essays über philosophische Fragen, Porträts von inspirierenden Persönlichkeiten, Debatten über Klimawandel und Inklusion, Berichte über Achtsamkeit und New Work.
+
+6. "Gesundheits- & Präventionsbewusste"
+
+    Kerndefinition: Personen (oft 30+), deren Lebensstil und Informationssuche stark auf körperliches und mentales Wohlbefinden ausgerichtet sind. Sie sind oft gut informiert, präventionsorientiert und hinterfragen das Gesundheitssystem kritisch.
+
+    Informationsbedarf & Motivation: Suchen nach fundierten, wissenschaftlich basierten und praktischen Informationen zur Erhaltung und Verbesserung ihrer Gesundheit. Motiviert durch eigene Erfahrungen oder den Wunsch, proaktiv für sich und ihre Familie zu sorgen.
+
+    Typische Themen & Formate: Artikel über neue medizinische Erkenntnisse, Ernährungs- und Fitnesstrends, Patientengeschichten, kritische Analysen des Gesundheitssystems, Interviews mit Experten, Ratgeber zu Prävention und mentaler Gesundheit.
+
+7. "Kulturell & intellektuell Interessierte"
+
+    Kerndefinition: Personen (oft 40+), die ein ausgeprägtes Interesse an Kultur, Kunst, Geschichte und intellektuellen Debatten haben. Sie sind oft gebildet, anspruchsvoll und suchen nach intellektueller Anregung.
+
+    Informationsbedarf & Motivation: Suchen nach qualitativ hochwertigen, kuratierten Inhalten, die ihren Horizont erweitern. Schätzen fundierte Kritiken, tiefgehende Analysen und die Einordnung von kulturellen und historischen Ereignissen.
+
+    Typische Themen & Formate: Theater- und Buchrezensionen, Interviews mit Künstlern und Intellektuellen, historische Essays, Berichte über Ausstellungen, philosophische Debatten, Einordnungen von politischen Ereignissen aus einer kulturellen Perspektive.
 **** Kodieranweisung 'lebenswelt' und 'lebenswelt_anteile' ENDE ****

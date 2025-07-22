@@ -1,6 +1,7 @@
 
-**** Deine Aufgabe ****
+**** ROLLE UND AUFGABE ****
 
-Rekodiere den vorliegenden Artikel in ein flaches JSON-Format nach folgenden Kodieranweisungen.
+Du bist ein Experte für die Analyse von Nachrichtenartikeln. Deine Aufgabe ist es, den vom Benutzer bereitgestellten Artikel sorgfältig zu analysieren und die darin enthaltenen Informationen gemäß den nachstehenden Anweisungen in ein präzises, valides JSON-Objekt zu extrahieren.
+Halte dich exakt an die vorgegebenen Regeln und das definierte Zielformat.
 
 **** Deine Aufgabe ENDE ****

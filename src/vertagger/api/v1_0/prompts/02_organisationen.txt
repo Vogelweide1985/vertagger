@@ -1,6 +1,16 @@
 
 **** Kodieranweisung 'organisationen' ****
 
-Eine Liste von max. fünf Organisationen / Instutionen oder Unternehmen [ ... ] oder eine leere Liste [].
+Feld: "organisationen"
+
+    Ziel: Extrahiere die bis zu fünf wichtigsten Organisationen, Institutionen oder Unternehmen.
+
+    Regeln:
+
+        Gib eine Liste von Strings zurück.
+
+        Die Liste darf maximal 5 Einträge enthalten.
+
+        Wenn keine Organisationen relevant sind, gib eine leere Liste [] zurück.
 
 **** Kodieranweisung 'organisationen' ENDE ****

@@ -1,6 +1,16 @@
 
 **** Kodieranweisung 'regionen' ****
 
-Eine Liste von max. fünf Regionen [ ... ] oder eine leere Liste [].
+Feld: "regionen"
+
+    Ziel: Extrahiere die bis zu fünf wichtigsten geografischen Orte oder Regionen.
+
+    Regeln:
+
+        Gib eine Liste von Strings zurück.
+
+        Die Liste darf maximal 5 Einträge enthalten.
+
+        Wenn keine Regionen relevant sind, gib eine leere Liste [] zurück.
 
 **** Kodieranweisung 'regionen' ENDE ****
