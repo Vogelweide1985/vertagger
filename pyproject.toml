@@ -1,0 +1,64 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "vertagger"
+description = 'Ein API zum Vetraggen von Artikeln'
+dynamic = ["version"]
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "vogelweide1985", email = "vogelweide1985@hotmail.de" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "fastapi",
+  "uvicorn[standard]"
+]
+
+[project.urls]
+Documentation = "https://github.com/vogelweide1985/-#readme"
+Issues = "https://github.com/vogelweide1985/-/issues"
+Source = "https://github.com/vogelweide1985/-"
+
+[tool.hatch.version]
+path = "src/vertagger/__about__.py" # Pfad hier anpassen
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/_ tests}"
+
+[tool.coverage.run]
+source_pkgs = ["_", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/_/__about__.py",
+]
+
+[tool.coverage.paths]
+_ = ["src/_", "*/-/src/_"]
+tests = ["tests", "*/-/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
