@@ -5,6 +5,7 @@ from .__about__ import __version__
 from config import global_settings # Dein globaler API Key
 from .api.v1_0 import endpoints as v1_endpoints
 
+#Der Client wird hier einmalig erstellt und in der App gespeichert
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     app.state.openai_client = AsyncOpenAI(api_key=global_settings.openai_api_key)
