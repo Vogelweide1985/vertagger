@@ -1,0 +1,6 @@
+
+**** Kodieranweisung 'regionen' ****
+
+Eine Liste von max. fünf Regionen [ ... ] oder eine leere Liste [].
+
+**** Kodieranweisung 'regionen' ENDE ****

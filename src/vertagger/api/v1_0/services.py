@@ -12,13 +12,24 @@ class ArticleService:
         self.temperature = temperature 
 
     def _load_prompt(self) -> str:
-        """Lädt den Prompt aus der lokalen prompts/prompt.txt Datei."""
-        try:
-            prompt_path = CURRENT_DIR / "prompts" / "prompt.txt"
-            return prompt_path.read_text(encoding="utf-8")
-        except FileNotFoundError:
-            # Dieser Fehler ist kritisch, da der Service ohne Prompt nicht arbeiten kann
-            raise HTTPException(status_code=500, detail="Prompt-Datei für diesen Service nicht gefunden.")
+        """
+        Lädt alle Prompt-Teile aus dem prompts-Verzeichnis,
+        sortiert sie und fügt sie zu einem einzigen String zusammen.
+        """
+        prompt_parts = []
+        prompts_dir = CURRENT_DIR / "prompts"
+        
+        # Finde alle .txt-Dateien und sortiere sie nach Namen (z.B. 00_..., 01_...)
+        sorted_prompt_files = sorted(prompts_dir.glob("*.txt"))
+
+        if not sorted_prompt_files:
+            raise HTTPException(status_code=500, detail="Keine Prompt-Dateien im Verzeichnis gefunden.")
+
+        for file_path in sorted_prompt_files:
+            prompt_parts.append(file_path.read_text(encoding="utf-8"))
+        
+        # Füge alle Teile mit einem doppelten Zeilenumbruch zusammen
+        return "\n\n".join(prompt_parts)
 
 
     async def process_article(self, article_data: dict) -> dict:

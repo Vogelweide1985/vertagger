@@ -1,0 +1,6 @@
+
+**** Kodieranweisung 'organisationen' ****
+
+Eine Liste von max. fünf Organisationen / Instutionen oder Unternehmen [ ... ] oder eine leere Liste [].
+
+**** Kodieranweisung 'organisationen' ENDE ****

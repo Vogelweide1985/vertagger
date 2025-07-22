@@ -1,0 +1,67 @@
+
+
+
+**** Kodieranweisung 'lebenswelt' und 'lebenswelt_anteile ****
+
+'lebenswelt': 
+Bestimme Eine der sieben möglichen Lebenswelt-Kategorien, die der Artikel anspricht.
+Hier sind die Eigenschaften / Mermkale der sieben Lebenswelten. 
+
+1. "Junge Erwachsene / Studierende"
+
+    Alter: ca. 18–30
+    Merkmale: Mobil, digitalaffin, auf der Suche nach Orientierung, am Anfang des Berufslebens oder im Studium
+    Interessen: Ausbildung, Karriere, Wohnen, Kultur, Nachtleben, Nachhaltigkeit, Digitalisierung, gesellschaftlicher Wandel
+    Relevante Inhalte: Praktika, Events, Freizeit, Porträts junger Menschen, Bildungspolitik, Start-ups
+
+
+2. "Beruflich Engagierte / Entscheider"
+
+    Alter: ca. 30–60
+    Merkmale: Beruflich aktiv, leistungsorientiert, in Verantwortung (Führung, Selbstständigkeit), informiert, oft wenig Zeit
+    Interessen: Politik, Wirtschaft, Gesellschaft, Digitalisierung, Bildung, Infrastruktur, Gesundheitssystem
+    Relevante Inhalte: Interviews, Hintergrundberichte, Analysen, systemrelevante Debatten, Business-News, Meinungsstücke
+
+
+3. "Familien / Eltern"
+
+    Alter: ca. 30–50
+    Merkmale: Verantwortlich für Kinder, Alltagsorganisation, berufliche und private Vereinbarkeit
+    Interessen: Schule, Kitas, Gesundheit, Sicherheit, Mobilität, Freizeitangebote, regionale Infrastruktur
+    Relevante Inhalte: Lokalpolitik mit Familienbezug, Ratgeber, Veranstaltungen, Erziehung, Gesundheit
+
+4. "Senioren / Ruheständler"
+
+    Alter: 60+
+    Merkmale: Zeit für Lektüre, stark lokal verwurzelt, hohe Loyalität zur Tageszeitung, interessiert an Regionalgeschichte und lokaler Entwicklung
+    Interessen: Rente, Pflege, Gesundheit, Nachbarschaft, Ehrenamt, Heimatgeschichte
+    Relevante Inhalte: Porträts, Vereinsleben, Leserbriefe, Kommentare, gesundheitliche Vorsorge
+
+5. "Sinnsuchende / Werteorientierte"
+
+    Alter: Quer durch alle Generationen
+    Merkmale: Orientierung an ethischen, ökologischen, sozialen oder spirituellen Werten – oft engagiert, reflektiert, bildungsnah
+    Interessen: Nachhaltigkeit, Zusammenhalt, Achtsamkeit, Inklusion, gesellschaftliche Entwicklung, Zukunftsthemen
+    Relevante Inhalte: Interviews, Essays, Portraits, tiefgründige Reportagen, Veranstaltungsformate wie Lesungen, Diskussionen
+
+6. "Gesundheitsinteressierte"
+
+    Alter: meist 30+, oft auch Senioren
+    Merkmale: Präventionsorientiert, gesundheitsbewusst, kritisch gegenüber Systemen, oft eigene oder familiäre Erfahrungen mit Krankheiten
+    Interessen: Ernährung, Bewegung, Gesundheitsversorgung, Pflege, Krankenkassen, Prävention
+    Relevante Inhalte: Medizintrends, Patientengeschichten, Systemkritik, Interviews mit Ärzt:innen, Ratgeber
+
+7. "Kulturell Interessierte / Bildungsbürger"
+
+    Alter: meist 40+, aber auch jünger
+    Merkmale: Interesse an Literatur, Theater, Musik, Geschichte, Philosophie, Politik – häufig Abonnenten
+    Interessen: Kulturveranstaltungen, Lesungen, Rezensionen, Interviews, Hintergrundberichte, Regionalgeschichte
+    Relevante Inhalte: Kulturelle Veranstaltungsberichterstattung, Interviews mit Künstler:innen, Theater- und Literaturkritiken
+
+'lebenswelt_anteile': 
+Gebe für jede Lebenswelt einen Ganzzahligen Wert zwischen 0 und 100 an. 
+Dieser sagt aus, wie relevant der Artikel für die jeweilige Lebenswelt. Alle 7 Werte müssen 100 ergeben.
+Das Ergebnis ist eine Liste mit sieben Einträgen. Die Reihenfolge der Lebenswelten ist wie oben definiert. 
+Beispiel Output : [65,25,10,0,0,0,0]  oder [55,30,8,4,2,1,0]
+
+**** Kodieranweisung 'lebenswelt' und 'lebenswelt_anteile' ENDE ****

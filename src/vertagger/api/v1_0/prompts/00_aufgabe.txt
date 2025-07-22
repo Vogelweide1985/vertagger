@@ -1,0 +1,6 @@
+
+**** Deine Aufgabe ****
+
+Rekodiere den vorliegenden Artikel in ein flaches JSON-Format nach folgenden Kodieranweisungen.
+
+**** Deine Aufgabe ENDE ****

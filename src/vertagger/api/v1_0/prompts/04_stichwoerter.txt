@@ -1,0 +1,6 @@
+
+**** Kodieranweisung 'stichwoerter' ****
+
+Liste von max. fünf Schlagwörtern, mindestens ein Stichwort oder leere Liste [].
+
+***' Kodieranweisung 'stichwoerter' ENDE ****

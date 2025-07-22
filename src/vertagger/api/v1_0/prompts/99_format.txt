@@ -1,0 +1,22 @@
+**** Formatvorgabe ****
+
+Achte auf konsistente und vollständige Befüllung der Felder entsprechend der vorgefundenen Inhalte.
+Hier ist das erforderte JSON-Zielformat mit Beispiel Text:
+
+{
+    "personen": ["Brack Obama", "Angela Merkel", "Dr. David Precht"],
+    "organisationen": ["Umweltbundesamt", "Evonik", "Eintracht Frankfurt"]
+    "regionen": ["Rheinland-Pfalz", "Cochem", "Weingebiet"],
+    "stichwoerter": ["Digitalisierung", "Mittelstand", "Wachstum"],
+    "zusammenfassung": "Eine Zusammenfassung über mehrere Sätze ....",
+    "userneeds": "Inspirieren",
+    "lebenswelt": "Familien / Eltern",
+    "lebenswelt_anteile": [70,20,5,5,0,0,0],
+    "iab_content_taxonomy": "150",
+}
+
+
+Erzeuge jetzt für den Inhalt das vollständige JSON nach diesen Vorgaben.
+Antworte NUR mit dem finalen JSON ohne zusätzliche Erklärungen, Einleitungen oder Codeblöcke.
+
+**** Formatvorgabe ENDE ****

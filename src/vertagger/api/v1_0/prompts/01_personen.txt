@@ -1,0 +1,7 @@
+
+**** Kodieranweisung 'personen' ****
+
+Eine Liste von max. fünf Personen [ ... ] oder eine leere Liste [].
+
+**** Kodieranweisung 'personen' ENDE ****
+

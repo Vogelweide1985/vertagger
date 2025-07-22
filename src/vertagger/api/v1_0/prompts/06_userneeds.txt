@@ -1,0 +1,56 @@
+
+**** Kodieranweisung 'userneeds' ****
+Bestimme Eine der acht User needs aus dem BBC Modell für Nachrichtenartikel:
+
+1. Informieren
+    Ziel: Den Leser über aktuelle Ereignisse und Fakten auf dem Laufenden halten.
+    Anleitung:
+        Artikel der primär über neue, relevante Informationen berichtet (z. B. Nachrichtenmeldungen, Updates, Zahlen, Daten).
+        Passagen, die den reinen Informationsgehalt ohne starke Wertung oder zusätzliche Interpretation liefern.
+
+2. Einordnen
+    Ziel: Kontext, Hintergründe und Zusammenhänge aufzeigen, um das Geschehen besser zu verstehen.
+    Anleitung:
+        Abschnitte, in denen historische, politische, wirtschaftliche oder kulturelle Hintergründe erläutert werden.
+        Artikel welche das Thema in einen breiteren Kontext stellt oder vergleicht.
+
+3. Beteiligen
+    Ziel: Den Leser aktiv in den Diskurs einbinden oder zur Interaktion anregen.
+    Anleitung:
+        Elemente, die zu Kommentaren, Umfragen, Diskussionen oder sozialen Medien-Interaktionen einladen.
+        Artikel enthält partizipative Elemente oder direkte Aufforderungen zur Meinungsäußerung.
+
+4. Unterhalten
+    Ziel: Den Leser emotional ansprechen und unterhalten.
+    Anleitung:
+        Narrative Elemente, ansprechende Sprachstile oder humorvolle und emotionale Passagen.
+        Artikel trägt neben der Informationsvermittlung auch primär zur Unterhaltung bei.
+
+5. Hilfe geben
+    Ziel: Konkrete Unterstützung oder praktische Ratschläge bieten.
+    Anleitung:
+        Artikel die Tipps, Anleitungen oder Empfehlungen zur Problemlösung enthalten.
+        Passagen, in denen der Leser direkt unterstützt oder auf Ressourcen hingewiesen wird.
+
+6. Erklären
+
+    Ziel: Komplexe Zusammenhänge verständlich machen und aufklären.
+    Anleitung:
+        Detaillierten Erklärungen, Analysen und Darstellungen von Ursachen-Wirkungs-Beziehungen.
+        Artikel die gezielt Wissen vermitteln und komplexe Sachverhalte simplifizieren.
+
+7. Inspirieren
+
+    Ziel: Den Leser motivieren und neue Perspektiven oder Ideen aufzeigen.
+    Anleitung:
+        Erfolgsgeschichten, Visionen oder positive Beispiele, die zu eigenem Handeln anregen können.
+        Artikel, die den Leser dazu anregen, über den Tellerrand hinauszuschauen oder sich selbst neue Ziele zu setzen.
+
+8. Vernetzen
+
+    Ziel: Verbindungen schaffen und den Austausch zwischen Menschen oder Gruppen fördern.
+    Anleitung:
+        Artikel die Kooperation, Community-Building oder den interaktiven Austausch unterstützen (z. B. Hinweise auf Veranstaltungen, Netzwerke oder Plattformen).
+        Artikel dienen den Aufbau von Beziehungen oder betonen die Zusammenarbeit.
+
+**** Kodieranweisung 'userneeds' ENDE ****
