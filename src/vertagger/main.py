@@ -2,7 +2,7 @@ from fastapi import FastAPI
 from contextlib import asynccontextmanager
 from openai import AsyncOpenAI
 from .__about__ import __version__
-from config import global_settings # Dein globaler API Key
+from .config import global_settings # Dein globaler API Key
 from .api.v1_0 import endpoints as v1_endpoints
 
 #Der Client wird hier einmalig erstellt und in der App gespeichert
