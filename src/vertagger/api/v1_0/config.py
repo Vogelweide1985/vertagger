@@ -1,9 +1,10 @@
-from pydantic_settings import BaseSettings, SettingsConfigDict
+from pydantic import BaseModel
 
-class Settings(BaseSettings):
-    # Die Variable wird automatisch aus der .env-Datei gelesen
-    openai_api_key: str
-    gpt_model: str 
-    model_config = SettingsConfigDict(env_file=".env")
+# Diese Klasse ist NUR für version-spezifische Einstellungen
+class VersionConfig(BaseModel):
+    # Der Modellname ist hier fest für v1.0 definiert.
+    # Er muss nicht aus .env kommen, da er Teil des v1.0-Designs ist.
+    gpt_model: str = "gpt-4o"
 
-settings = Settings() # type: ignore
+# Wir erstellen eine Instanz, die wir im v1_0-Modul verwenden können
+v1_config = VersionConfig()

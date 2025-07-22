@@ -2,17 +2,14 @@ import json
 from openai import AsyncOpenAI, RateLimitError
 from fastapi import HTTPException
 
-# ✅ Korrekter Import: Lade das 'settings'-Objekt aus der lokalen config.py
-from .config import settings
 
 class ArticleService:
-    def __init__(self):
-        # ✅ Greife auf das eine 'settings'-Objekt zu
-        self.client = AsyncOpenAI(api_key=settings.openai_api_key)
-        self.model = settings.gpt_model
+    def __init__(self, client: AsyncOpenAI, model: str):
+        self.client = client
+        self.model = model
 
     async def process_article(self, article_data: dict, prompt: str) -> dict:
-        # Der Rest deines Codes hier bleibt unverändert...
+
         input_text = f"Artikel-Daten: {json.dumps(article_data)}"
         
         try:

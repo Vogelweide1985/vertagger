@@ -1,8 +1,13 @@
-# Datei zur Verwaltung von lokalen Geheimnissen
-.env
-
 # Virtuelle Umgebung
 .venv/
 
 # Python Cache
 __pycache__/
+**/__pycache__/
+
+# IDE-spezifisch
+.vscode/
+.idea/
+
+# Lokale Geheimnisse
+.env

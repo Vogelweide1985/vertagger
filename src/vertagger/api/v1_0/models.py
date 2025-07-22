@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 
 class ArticleInput(BaseModel):
-    ArtikelID: int
+    ArtikelID: str
     Titel: str
-    Subtitel: str
-    Text: str
+    Subtitel: str | None = None
+    Text: str | None = None
 
 class ArticleOutput(BaseModel):
     artikel_id: int
