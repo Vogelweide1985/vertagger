@@ -38,7 +38,12 @@ class ArticleService:
         # Lade den Prompt direkt hier
         prompt = self._load_prompt()
 
-        input_text = f"Artikel-Daten: {json.dumps(article_data)}"
+        input_parts = ["Hier sind die zu verarbeitenden Artikel-Daten:"]
+        for key, value in article_data.items():
+            if value: # Nur Felder hinzufügen, die einen Wert haben
+                input_parts.append(f"--- {key} ---\n{value}")
+        
+        input_text = "\n\n".join(input_parts)
         
         try:
             response = await self.client.chat.completions.create(
