@@ -22,6 +22,7 @@ from .models import ArticleInput, ArticleOutput
 from .services import ArticleService
 from ...config import settings
 
+from ...api.dependencies import get_api_key
 
 # --- 2. Router-Initialisierung ---
 # Ein Router ist wie ein Mini-FastAPI-App-Objekt. Er hilft, das Projekt zu modularisieren.
@@ -81,7 +82,8 @@ ArticleServiceDep = Annotated[ArticleService, Depends(get_article_service)]
 @router.post("/extract_metadata", response_model=ArticleOutput)
 async def extract_article_metadata(
     article: ArticleInput,
-    service: ArticleServiceDep
+    service: ArticleServiceDep,
+    api_key: str = Depends(get_api_key)
 ):
     """
     Hauptendpunkt zum Analysieren und Vertaggen eines Artikels.

@@ -15,6 +15,26 @@ from typing import Annotated
 from fastapi import Depends, Request
 from openai import AsyncOpenAI
 
+from fastapi import Security, HTTPException, status
+from fastapi.security import APIKeyHeader
+
+from ..config import settings
+
+api_key_header = APIKeyHeader(name="X-API-Key")
+
+# Abhängigkeits-Funktion zur Validierung des Schlüssels
+def get_api_key(key: str = Security(api_key_header)):
+    """
+    Extrahiert den API-Schlüssel aus dem Header und validiert ihn.
+    Gibt einen Fehler zurück, wenn der Schlüssel fehlt oder ungültig ist.
+    """
+    if key == settings.API_KEY:
+        return key
+    else:
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Ungültiger oder fehlender API-Schlüssel",
+        )
 
 # --- 2. Abhängigkeits-Funktion (Dependency) ---
 def get_openai_client(request: Request) -> AsyncOpenAI:

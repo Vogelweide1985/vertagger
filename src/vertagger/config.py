@@ -53,6 +53,9 @@ class AppSettings(BaseSettings):
     opik_workspace: str 
     opik_project_name: str 
 
+    #Der interne API-KEY
+    API_KEY: str
+
     # === Verschachtelte Konfigurationen ===
     # Hier wird die versions-spezifische Konfiguration als "Namespace" eingebunden.
     # Im Code greift man darauf über `settings.v1.gpt_model` zu.
