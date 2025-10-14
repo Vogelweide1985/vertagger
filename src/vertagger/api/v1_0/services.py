@@ -1,55 +1,84 @@
+# -*- coding: utf-8 -*-
+
+"""
+Modul für die Geschäftslogik (Service Layer) der API.
+
+Die `ArticleService`-Klasse kapselt die gesamte Logik für die Verarbeitung
+eines Artikels. Sie ist dafür verantwortlich, mit externen Diensten wie der
+OpenAI-API zu kommunizieren und deren Ergebnisse zu validieren.
+"""
+
+# --- 1. Importe ---
 import json
-from pathlib import Path
 from typing import Optional
 
 from fastapi import HTTPException
 from openai import AsyncOpenAI, RateLimitError
 
-# Opik-Importe
+# Opik wird für das Tracing und die Evaluierung der LLM-Aufrufe verwendet.
 from opik import opik_context, track
 from opik.evaluation.metrics import IsJson
 
-CURRENT_DIR = Path(__file__).parent
 
+# --- 2. Konstanten ---
+# Ein Set mit erlaubten Werten für das 'userneeds'-Feld.
+# Die Verwendung eines Sets (`{...}`) ist hier performanter für die
+# "in"-Prüfung als eine Liste (`[...]`).
 VALID_USERNEEDS = {
     "Informieren", "Einordnen", "Beteiligen", "Unterhalten",
     "Hilfe geben", "Erklären", "Inspirieren", "Vernetzen"
 }
 
+
+# --- 3. Die Service-Klasse ---
 class ArticleService:
-    def __init__(self, client: AsyncOpenAI, model: str, temperature: float):
+    """
+    Kapselt die Logik zur Anreicherung eines Artikels mit Metadaten.
+    """
+    def __init__(self, client: AsyncOpenAI, model: str, temperature: float, system_prompt: str):
+        """
+        Initialisiert den Service mit allen benötigten Abhängigkeiten.
+
+        Diese werden per Dependency Injection vom `endpoints`-Modul übergeben.
+        """
         self.client = client
         self.model = model
         self.temperature = temperature
+        self.system_prompt = system_prompt
 
     def _validate_and_score_output(self, llm_output: str) -> Optional[dict]:
         """
-        Validiert den LLM-Output mit Opik-Metriken und gibt das geparste JSON zurück.
+        Validiert die LLM-Antwort und sendet Feedback-Scores an Opik.
 
-        Diese Methode prüft, ob der Output valides JSON ist und ob der
-        'userneeds'-Wert korrekt ist. Die Ergebnisse werden als Feedback Scores
-        an den aktuellen Opik-Trace gesendet.
+        Diese private Hilfsmethode hat zwei Hauptaufgaben:
+        1.  Prüfen, ob die Antwort vom LLM eine valide Struktur hat (z.B. korrektes JSON).
+        2.  Prüfen, ob die Inhalte fachlichen Regeln entsprechen (z.B. gültiger Userneed).
+        3.  Die Ergebnisse dieser Prüfungen als "Feedback" an Opik senden, um die
+            Qualität der LLM-Antworten zu überwachen.
+
+        Args:
+            llm_output: Der rohe String, der von der OpenAI-API zurückgegeben wurde.
 
         Returns:
-            Ein Dictionary mit dem geparsten JSON bei Erfolg, sonst None.
+            Ein Dictionary mit den geparsten Daten bei Erfolg, andernfalls `None`.
         """
         feedback_scores = []
 
-        # 1. Metrik: Ist der Output valides JSON?
+        # Metrik 1: Ist die Antwort valides JSON?
         json_score = IsJson().score(output=llm_output)
         score_dict = {"name": json_score.name, "value": json_score.value}
         if json_score.reason:
             score_dict["reason"] = json_score.reason
-
         feedback_scores.append(score_dict)
 
-        # Guard Clause: Wenn kein valides JSON, brechen wir hier ab.
+        # "Guard Clause": Wenn die Antwort kein valides JSON ist, brechen wir sofort ab.
+        # Das verhindert Fehler im nachfolgenden Code.
         if json_score.value != 1.0:
             opik_context.update_current_trace(feedback_scores=feedback_scores)
-            return None  # Frühzeitiger Ausstieg
+            return None
 
-        # 2. Metrik: Ist 'userneeds' korrekt?
-        # Dieser Code wird nur bei validem JSON erreicht.
+        # Metrik 2: Ist der Wert für 'userneeds' einer der erlaubten Werte?
+        # Dieser Code wird nur ausgeführt, wenn die JSON-Validierung erfolgreich war.
         data = json.loads(llm_output)
         userneed = data.get("userneeds")
 
@@ -59,73 +88,85 @@ class ArticleService:
             feedback_scores.append({
                 "name": "is_valid_userneed",
                 "value": 0.0,
-                "reason": f"Ungültiger Wert: {userneed}"
+                "reason": f"Ungültiger Wert: '{userneed}'. Erwartet wurde einer aus {VALID_USERNEEDS}."
             })
         
+        # Sende alle gesammelten Scores an den aktuellen Opik-Trace.
         opik_context.update_current_trace(feedback_scores=feedback_scores)
             
         return data
 
-    @track
+    @track  # Der `@track`-Dekorator von Opik startet automatisch einen neuen Trace für diese Methode.
     async def process_article(self, article_data: dict) -> dict:
-        """Verarbeitet einen Artikel und gibt ein validiertes Ergebnis zurück."""
-        
-        # 1. Vorbereitung: Prompt und Input erstellen
-        prompt = self._load_prompt()
-        input_text = self._prepare_input_text(article_data)
+        """
+        Orchestriert den gesamten Prozess der Artikelverarbeitung.
 
-        # 2. LLM-Aufruf
+        Dies ist die öffentliche Hauptmethode des Services.
+
+        Args:
+            article_data: Ein Dictionary mit den Artikel-Daten aus der API-Anfrage.
+
+        Returns:
+            Ein Dictionary mit den validierten und angereicherten Metadaten.
+
+        Raises:
+            HTTPException: Bei Fehlern wie Rate-Limits, leeren Antworten oder
+                           fehlgeschlagener Validierung.
+        """
+        
+        # Schritt 1: Bereite den Input für das LLM vor.
+        user_input_text = self._prepare_input_text(article_data)
+
+        # Schritt 2: Rufe die OpenAI Chat Completion API auf.
         try:
             response = await self.client.chat.completions.create(
                 model=self.model,
                 messages=[
-                    {"role": "system", "content": prompt},
-                    {"role": "user", "content": input_text}
+                    {"role": "system", "content": self.system_prompt},
+                    {"role": "user", "content": user_input_text}
                 ],
                 temperature=self.temperature,
+                # Erzwingt, dass das LLM eine JSON-Antwort generiert.
                 response_format={"type": "json_object"}
             )
         except RateLimitError:
-            raise HTTPException(status_code=429, detail="Rate limit exceeded.")
+            # Fange den spezifischen Fehler für Rate-Limits ab und gib einen
+            # passenden HTTP-Statuscode (429) zurück.
+            raise HTTPException(status_code=429, detail="OpenAI Rate Limit überschritten.")
 
         result_str = response.choices[0].message.content
         if not result_str:
-            raise HTTPException(status_code=500, detail="OpenAI returned an empty response.")
+            raise HTTPException(status_code=500, detail="OpenAI hat eine leere Antwort zurückgegeben.")
 
-        # 3. Validierung und Scoring durch die neue Methode
+        # Schritt 3: Validiere die rohe Antwort des LLMs.
         validated_result = self._validate_and_score_output(result_str)
         
-        # 4. Ergebnis verarbeiten
+        # Schritt 4: Verarbeite das validierte Ergebnis und gib es zurück.
         if validated_result is None:
             raise HTTPException(status_code=500, detail="LLM-Antwort war kein valides JSON.")
             
+        # Füge die ursprüngliche ArtikelID hinzu, um die Antwort der Anfrage zuordnen zu können.
         validated_result["artikel_id"] = article_data.get("ArtikelID")
         return validated_result
 
     
     def _prepare_input_text(self, article_data: dict) -> str:
-        """Stellt den Input-String für das LLM aus den Artikeldaten zusammen."""
+        """
+        Stellt aus den Artikel-Daten einen formatierten String für das LLM zusammen.
+
+        Diese Methode stellt sicher, dass das LLM alle relevanten Informationen
+        in einem klar strukturierten Format erhält.
+        """
         input_parts = ["Hier sind die zu verarbeitenden Artikel-Daten:"]
-        for key, value in article_data.items():
+        
+        # Definiere die Reihenfolge der Felder, um Konsistenz zu gewährleisten.
+        # (inklusive des neuen 'Teaser'-Feldes)
+        field_order = ["ArtikelID", "Titel", "Subtitel", "Teaser", "Text"]
+
+        for key in field_order:
+            value = article_data.get(key)
+            # Füge nur Felder hinzu, die auch einen Wert haben.
             if value:
                 input_parts.append(f"--- {key} ---\n{value}")
+                
         return "\n\n".join(input_parts)
-
-    def _load_prompt(self) -> str:
-        """
-        Lädt alle Prompt-Teile aus dem prompts-Verzeichnis,
-        sortiert sie und fügt sie zu einem einzigen String zusammen.
-        """
-        prompt_parts = []
-        prompts_dir = CURRENT_DIR / "prompts"
-        
-        # Finde alle .txt-Dateien und sortiere sie nach Namen (z.B. 00_..., 01_...)
-        sorted_prompt_files = sorted(prompts_dir.glob("*.txt"))
-
-        if not sorted_prompt_files:
-            raise HTTPException(status_code=500, detail="Keine Prompt-Dateien im Verzeichnis gefunden.")
-
-        for file_path in sorted_prompt_files:
-            prompt_parts.append(file_path.read_text(encoding="utf-8"))
-
-        return "\n\n".join(prompt_parts)
