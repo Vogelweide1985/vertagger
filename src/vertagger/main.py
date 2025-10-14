@@ -14,6 +14,7 @@ Es ist verantwortlich für:
 # --- 1. Standard- und Drittanbieter-Bibliotheken importieren ---
 # Diese Importe stellen die grundlegenden Bausteine der Anwendung bereit.
 import os
+import yaml
 from contextlib import asynccontextmanager
 from pathlib import Path
 
@@ -31,34 +32,41 @@ from .config import settings
 # --- 3. Hilfsfunktion zum Laden des System-Prompts ---
 def load_prompt_on_startup() -> str:
     """
-    Lädt alle Prompt-Teile aus dem prompts-Verzeichnis und fügt sie zusammen.
-
-    Diese Funktion wird nur einmal beim Start der Anwendung ausgeführt. Das vermeidet
-    wiederholte und langsame Festplattenzugriffe bei jedem API-Aufruf und verbessert
-    somit die Performance erheblich.
-
-    Die .txt-Dateien im prompts-Verzeichnis werden alphabetisch sortiert,
-    sodass eine Nummerierung (z.B. 00_..., 01_...) die Reihenfolge steuert.
-
-    Returns:
-        Ein einziger String, der den vollständigen System-Prompt enthält.
-
-    Raises:
-        RuntimeError: Wenn das prompts-Verzeichnis leer ist oder nicht gefunden wird.
-                      Verhindert, dass die API in einem fehlerhaften Zustand startet.
+    Lädt die Prompt-Bausteine aus der zentralen prompt.yaml-Datei
+    und setzt sie in einer vordefinierten Reihenfolge zusammen.
     """
-    prompt_parts = []
-    # Der Pfad wird dynamisch relativ zu dieser Datei konstruiert, um portabel zu bleiben.
-    prompts_dir = Path(__file__).parent / "api/v1_0/prompts"
+
+    # Korrekter Pfad zur neuen, zentralen Prompt-Datei.
+    # Geht von der Position von main.py aus in den api/v1_0 Ordner.
+    prompt_file = Path(__file__).parent / "api/v1_0/prompt.yaml"
+
+    if not prompt_file.exists():
+        raise RuntimeError(f"Prompt-Datei unter {prompt_file} nicht gefunden.")
+
+    with open(prompt_file, 'r', encoding='utf-8') as f:
+        prompt_data = yaml.safe_load(f)
+
+    # WICHTIG: Definiere hier explizit die Reihenfolge der Bausteine!
+    # Dies ist der entscheidende Teil, der die Struktur des finalen Prompts steuert.
+    # Wir greifen auf die Schlüssel zu, die in der prompt.yaml definiert wurden.
+    anweisungen = prompt_data.get('anweisungen', {})
     
-    sorted_prompt_files = sorted(prompts_dir.glob("*.txt"))
+    prompt_order = [
+        prompt_data.get('rolle_und_aufgabe'),
+        anweisungen.get('personen'),
+        anweisungen.get('organisationen'),
+        anweisungen.get('regionen'),
+        anweisungen.get('stichwoerter'),
+        anweisungen.get('zusammenfassung'),
+        anweisungen.get('userneeds'),
+        anweisungen.get('lebenswelt'),
+        anweisungen.get('iab_content_taxonomy'),
+        prompt_data.get('finale_anweisung')
+    ]
 
-    if not sorted_prompt_files:
-        raise RuntimeError(f"Keine Prompt-Dateien im Verzeichnis {prompts_dir} gefunden.")
-
-    for file_path in sorted_prompt_files:
-        prompt_parts.append(file_path.read_text(encoding="utf-8"))
-
+    # Filtere alle `None`-Einträge heraus (falls ein Schlüssel in der YAML fehlt)
+    # und füge die Textblöcke mit einem doppelten Zeilenumbruch zusammen.
+    prompt_parts = [part for part in prompt_order if part]
     return "\n\n".join(prompt_parts)
 
 

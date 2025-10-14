@@ -11,3 +11,6 @@ __pycache__/
 
 # Lokale Geheimnisse
 .env
+
+# Alte Daten
+.old/

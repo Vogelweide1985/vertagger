@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "vertagger"
-description = 'Ein API zum Vetraggen von Artikeln'
+description = 'Eine API zum Vetraggen von Artikeln'
 dynamic = ["version"]
 readme = "README.md"
 requires-python = ">=3.8"
@@ -29,7 +29,8 @@ dependencies = [
   "uvicorn[standard]",
   "pydantic-settings",
   "openai",
-  "opik"
+  "opik",
+  "PyYAML"
 ]
 
 [project.optional-dependencies]
