@@ -105,34 +105,41 @@ anweisungen:
 
     **** Kodieranweisung 'userneeds' ENDE ****
 
-  lebenswelt: |
-    **** Kodieranweisung 'lebenswelt' und 'lebenswelt_anteile ****
+  audiences: |
+    **** Kodieranweisung 'audiences' ****
 
-    FELDER: "lebenswelt" und "lebenswelt_anteile"
-    ANWEISUNG FÜR "lebenswelt":
-        Ziel: Identifiziere die primäre und dominanteste Lebenswelt, die der Artikelinhalt anspricht.
+    FELDER: "audiences", "audience_1_begruendung", "audience_2_begruendung", "audience_3_begruendung"
+
+    ANWEISUNG FÜR "audiences":
+        Ziel: Identifiziere die drei relevantesten Zielgruppen (Audiences) für den Artikel aus der unten stehenden Liste.
         Regeln:
-            - Wähle exakt EINE der sieben unten definierten Kategorien.
-            - Gib den vollständigen Namen der Kategorie als String zurück (z.B. "Junge Erwachsene in Ausbildung & Berufseinstieg").
+            - Gib eine Liste mit exakt DREI Strings zurück.
+            - Ordne die Liste nach Relevanz: Die wichtigste Audience steht an erster Stelle.
+            - Wenn weniger als drei Audiences relevant sind, fülle die Liste mit dem String "Keine weitere" auf. Beispiel: ["Sportfans", "Sporttreibende", "Keine weitere"].
 
-    ANWEISUNG FÜR "lebenswelt_anteile":
-        Ziel: Schätze die prozentuale Relevanz des Artikels für jede der sieben Lebenswelten.
+    ANWEISUNG FÜR "audience_X_begruendung":
+        Ziel: Begründe für jede der drei ausgewählten Audiences in einem einzigen Satz, warum der Artikel für sie relevant ist.
         Regeln:
-            - Gib eine Liste mit sieben Ganzzahlen (Integer) zurück.
-            - Die Summe aller sieben Zahlen muss exakt 100 ergeben.
-            - Die Reihenfolge in der Liste muss exakt der unten stehenden Reihenfolge der Lebenswelten entsprechen.
-            - Beispiel: [10, 20, 50, 5, 5, 10, 0]
+            - "audience_1_begruendung" muss sich auf den ersten Eintrag in der "audiences"-Liste beziehen.
+            - "audience_2_begruendung" muss sich auf den zweiten Eintrag in der "audiences"-Liste beziehen.
+            - "audience_3_begruendung" muss sich auf den dritten Eintrag in der "audiences"-Liste beziehen.
+            - Wenn eine Audience "Keine weitere" ist, soll die Begründung lauten: "Keine weitere relevante Audience identifiziert."
 
-    MODELLBESCHREIBUNG: LEBENSWELTEN
-    1. "Junge Erwachsene in Ausbildung & Berufseinstieg": Personen in der Übergangsphase zwischen Ausbildung/Studium und der Etablierung im Berufsleben (ca. 18-30 Jahre). Geprägt von persönlicher und beruflicher Orientierung, hoher digitaler Affinität und dem Wunsch nach gesellschaftlicher Teilhabe. Informationsbedarf: Suchen nach Orientierung, praktischem Nutzen und Inspiration. Relevante Themen: Karriere, Finanzen, Wohnen, soziale Kontakte, Selbstverwirklichung, Bildungspolitik, Nachhaltigkeit.
-    2. "Beruflich Etablierte & Entscheider": Leistungsorientierte Personen (ca. 30-60 Jahre), die fest im Berufsleben stehen, oft in verantwortungsvollen Positionen. Alltag ist durch Effizienz und hohen Informationsbedarf geprägt. Informationsbedarf: Benötigen entscheidungsrelevante Informationen und tiefgehende Analysen. Relevante Themen: Wirtschaftsanalysen, politische Hintergrundberichte, Managementstrategien, Innovation.
-    3. "Familien & Organisatoren des Alltags": Personen (ca. 30-50 Jahre), deren Lebensfokus auf der Organisation des Familienalltags liegt. Handeln ist stark von der Verantwortung für Kinder geprägt. Informationsbedarf: Suchen nach serviceorientierten, lösungsorientierten Informationen. Relevante Themen: Schul- und Kitapolitik, Gesundheits- und Erziehungsratgeber, lokale Themen, Sicherheit.
-    4. "Senioren & lokal Verwurzelte": Personen im Ruhestand oder kurz davor (60+), oft mit starker Bindung zur Heimatregion. Interessiert an Kontinuität und lokaler Gemeinschaft. Informationsbedarf: Suchen nach Orientierung in Gesundheits- und Finanzfragen und Stärkung des sozialen Miteinanders. Relevante Themen: Lokale Politik, Gesundheitsvorsorge, Rententhemen, Heimatgeschichte.
-    5. "Werteorientierte & Sinnsuchende": Altersunabhängige Gruppe, die ihr Handeln stark an ethischen, sozialen oder ökologischen Werten ausrichtet. Oft gesellschaftlich engagiert und reflektiert. Informationsbedarf: Suchen nach Inhalten, die über materielle Themen hinausgehen. Relevante Themen: Gesellschaftlicher Zusammenhalt, Nachhaltigkeit, persönliche Weiterentwicklung, globale Gerechtigkeit, Klimawandel, Inklusion.
-    6. "Gesundheits- & Präventionsbewusste": Personen (oft 30+), deren Lebensstil auf körperliches und mentales Wohlbefinden ausgerichtet ist. Oft gut informiert und präventionsorientiert. Informationsbedarf: Suchen nach fundierten, wissenschaftlich basierten und praktischen Gesundheitsinformationen. Relevante Themen: Neue medizinische Erkenntnisse, Ernährung, Fitness, Prävention, mentale Gesundheit.
-    7. "Kulturell & intellektuell Interessierte": Personen (oft 40+), mit ausgeprägtem Interesse an Kultur, Kunst, Geschichte und intellektuellen Debatten. Oft gebildet und anspruchsvoll. Informationsbedarf: Suchen nach qualitativ hochwertigen, kuratierten Inhalten, die ihren Horizont erweitern. Relevante Themen: Theater- und Buchrezensionen, historische Essays, philosophische Debatten, Ausstellungen.
+    MODELLBESCHREIBUNG: AUDIENCES
+    - "Foodies": Essengehen, Kochen, Backen, Trinken, Gastroszene, Lebensmittel, Agrar.
+    - "Gesundheitsbewusste": Kliniken, Ärzte, Krankheiten, Prävention, Behandlung, Medizintechnik, Gesund werden, Gesund bleiben.
+    - "Kunden und Arbeitnehmer": Firmen, Arbeitsmarkt, Geld, Start-ups, Geschäfte, Einkaufen, Innenstadt/Fußgängerzone.
+    - "Mieter und Hausbesitzer": Wohnungsbau, Hausbau, Architektur, Baugebiete, Geld/Steuern, Do-it-Yourself, Baumarkt, Einrichten und Wohnen, Parken.
+    - "Verkehrsteilnehmende": Auto, Fahrrad, Bahn, Bus, Fußgänger, Straßenbau/Baustellen, Parken, Innenstadt, Pendeln, Nachhaltigkeit.
+    - "Junge Familien": Schule, Kindergarten, Kinderbetreuung, Freizeitgestaltung, Stadtentwicklung, Ortsentwicklung, Mentale Gesundheit, Mediennutzung.
+    - "Freizeitjunkies": Events (außer Sport), Hobbies, Urlaub/Reisen, Ausflüge, Ausgehen, Musik, Theater, Kino, Lifestyle.
+    - "Naturliebende": Nachhaltigkeit, Garten, Klimawandel, Tiere/Haustiere, Wald/Flur/Fluss/Teich/See.
+    - "Sportfans": Leistungssport, Spitzenteams, Ligabetrieb, Vereine, Sportevents.
+    - "Sporttreibende": Breitensport, Gesundheitssport, Fitness, Fitnessstudios, Vereine, Gesund bleiben, Gesund werden.
+    - "Voyeuristen": Polizei, Feuerwehr, Gericht/Justiz, Innere Sicherheit, Promis.
+    - "Nostalgiker": Stadtgeschichte, Ortsgeschichte, Persönlichkeiten, Archäologie.
 
-    **** Kodieranweisung 'lebenswelt' und 'lebenswelt_anteile' ENDE ****
+    **** Kodieranweisung 'audiences' ENDE ****
 
   iab_content_taxonomy: |
     **** Kodieranweisung 'iab_content_taxonomy' ****
@@ -866,15 +873,17 @@ finale_anweisung: |
   
   Beispiel für das Zielformat:
   {
-      "personen": ["Barack Obama", "Angela Merkel"],
-      "organisationen": ["Umweltbundesamt", "Eintracht Frankfurt"],
-      "regionen": ["Rheinland-Pfalz", "Cochem"],
-      "stichwoerter": ["Digitalisierung", "Wachstum"],
-      "zusammenfassung": "Eine neutrale Zusammenfassung, die aus drei bis fünf Sätzen besteht und die Kernaussagen des Artikels wiedergibt.",
-      "userneeds": "Einordnen",
-      "lebenswelt": "Beruflich Engagierte / Entscheider",
-      "lebenswelt_anteile": [10, 70, 10, 5, 5, 0, 0],
-      "iab_content_taxonomy": "52"
+      "personen": ["Max Mustermann"],
+      "organisationen": ["Musterfirma GmbH"],
+      "regionen": ["Musterstadt"],
+      "stichwoerter": ["Wirtschaft", "Innovation"],
+      "zusammenfassung": "Eine neutrale Zusammenfassung, die aus drei bis fünf Sätzen besteht.",
+      "userneeds": "Informieren",
+      "audiences": ["Kunden und Arbeitnehmer", "Verkehrsteilnehmende", "Keine weitere"],
+      "audience_1_begruendung": "Der Artikel berichtet über die Eröffnung eines neuen Werks und betrifft daher direkt Mitarbeiter und die lokale Wirtschaft.",
+      "audience_2_begruendung": "Durch den erwarteten Mehrverkehr sind Pendler und andere Verkehrsteilnehmer von den Plänen betroffen.",
+      "audience_3_begruendung": "Keine weitere relevante Audience identifiziert.",
+      "iab_content_taxonomy": "53"
   }
 
   Führe nun die Analyse des vom Benutzer bereitgestellten Artikels durch und erzeuge das JSON-Objekt.

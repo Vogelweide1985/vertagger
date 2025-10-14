@@ -59,7 +59,7 @@ def load_prompt_on_startup() -> str:
         anweisungen.get('stichwoerter'),
         anweisungen.get('zusammenfassung'),
         anweisungen.get('userneeds'),
-        anweisungen.get('lebenswelt'),
+        anweisungen.get('audiences'),
         anweisungen.get('iab_content_taxonomy'),
         prompt_data.get('finale_anweisung')
     ]

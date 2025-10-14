@@ -26,6 +26,8 @@ class ArticleOutput(BaseModel):
     stichwoerter: list[str]
     zusammenfassung: str
     userneeds: str
-    lebenswelt: str
-    lebenswelt_anteile: list[int]
+    audiences: list[str]
+    audience_1_begruendung: str
+    audience_2_begruendung: str
+    audience_3_begruendung: str
     iab_content_taxonomy: str
