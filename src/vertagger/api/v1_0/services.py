@@ -29,6 +29,12 @@ VALID_USERNEEDS = {
     "Hilfe geben", "Erklären", "Inspirieren", "Vernetzen"
 }
 
+VALID_AUDIENCES = {
+    "Foodies", "Gesundheitsbewusste", "Kunden und Arbeitnehmer",
+    "Mieter und Hausbesitzer", "Verkehrsteilnehmende", "Junge Familien",
+    "Freizeitjunkies", "Naturliebende", "Sportfans", "Sporttreibende",
+    "Voyeuristen", "Nostalgiker", "Keine weitere"
+}
 
 # --- 3. Die Service-Klasse ---
 class ArticleService:
@@ -89,6 +95,22 @@ class ArticleService:
                 "name": "is_valid_userneed",
                 "value": 0.0,
                 "reason": f"Ungültiger Wert: '{userneed}'. Erwartet wurde einer aus {VALID_USERNEEDS}."
+            })
+        
+        # Metrik 3: Ist jede Audience in der Liste ein erlaubter Wert?
+        audiences = data.get("audiences", [])
+        
+        # Prüfen, ob alle extrahierten Audiences in der Whitelist enthalten sind
+        invalid_found = [a for a in audiences if a not in VALID_AUDIENCES]
+        
+        if not invalid_found and len(audiences) > 0:
+            feedback_scores.append({"name": "is_valid_audience", "value": 1.0})
+        else:
+            reason = f"Ungültige Werte gefunden: {invalid_found}" if invalid_found else "Keine Audiences extrahiert."
+            feedback_scores.append({
+                "name": "is_valid_audience",
+                "value": 0.0,
+                "reason": reason
             })
         
         # Sende alle gesammelten Scores an den aktuellen Opik-Trace.
