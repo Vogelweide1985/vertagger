@@ -111,33 +111,53 @@ anweisungen:
     FELDER: "audiences", "audience_1_begruendung", "audience_2_begruendung", "audience_3_begruendung"
 
     ANWEISUNG FÜR "audiences":
-        Ziel: Identifiziere die drei relevantesten Zielgruppen (Audiences) für den Artikel aus der unten stehenden Liste.
+        Ziel: Wähle die drei passendsten Einträge aus der unten definierten Whitelist.
         Regeln:
             - Gib eine Liste mit exakt DREI Strings zurück.
             - Ordne die Liste nach Relevanz: Die wichtigste Audience steht an erster Stelle.
             - Wenn weniger als drei Audiences relevant sind, fülle die Liste mit dem String "Keine weitere" auf. Beispiel: ["Sportfans", "Sporttreibende", "Keine weitere"].
+            - "audiences" ist ein Closed Set.
+            - Zulässig sind ausschließlich exakt die unten aufgeführten Audience-Namen (Whitelist).
+            - Es ist verboten, neue oder abgewandelte Audiences zu erzeugen.
 
-    ANWEISUNG FÜR "audience_X_begruendung":
-        Ziel: Begründe für jede der drei ausgewählten Audiences in einem einzigen Satz, warum der Artikel für sie relevant ist.
-        Regeln:
-            - "audience_1_begruendung" muss sich auf den ersten Eintrag in der "audiences"-Liste beziehen.
-            - "audience_2_begruendung" muss sich auf den zweiten Eintrag in der "audiences"-Liste beziehen.
-            - "audience_3_begruendung" muss sich auf den dritten Eintrag in der "audiences"-Liste beziehen.
-            - Wenn eine Audience "Keine weitere" ist, soll die Begründung lauten: "Keine weitere relevante Audience identifiziert."
+        ZULÄSSIGE WERTE FÜR "audiences" (Whitelist, exakt zu verwenden):
+          [
+            "Foodies",
+            "Gesundheitsbewusste",
+            "Kunden und Arbeitnehmer",
+            "Mieter und Hausbesitzer",
+            "Verkehrsteilnehmende",
+            "Junge Familien",
+            "Freizeitjunkies",
+            "Naturliebende",
+            "Sportfans",
+            "Sporttreibende",
+            "Voyeuristen",
+            "Nostalgiker",
+            "Keine weitere"
+          ]
+            
+          MODELLBESCHREIBUNG: AUDIENCES
+          - "Foodies": Essengehen, Kochen, Backen, Trinken, Gastroszene, Lebensmittel, Agrar.
+          - "Gesundheitsbewusste": Kliniken, Ärzte, Krankheiten, Prävention, Behandlung, Medizintechnik, Gesund werden, Gesund bleiben.
+          - "Kunden und Arbeitnehmer": Firmen, Arbeitsmarkt, Geld, Start-ups, Geschäfte, Einkaufen, Innenstadt/Fußgängerzone.
+          - "Mieter und Hausbesitzer": Wohnungsbau, Hausbau, Architektur, Baugebiete, Geld/Steuern, Do-it-Yourself, Baumarkt, Einrichten und Wohnen, Parken.
+          - "Verkehrsteilnehmende": Auto, Fahrrad, Bahn, Bus, Fußgänger, Straßenbau/Baustellen, Parken, Innenstadt, Pendeln, Nachhaltigkeit.
+          - "Junge Familien": Schule, Kindergarten, Kinderbetreuung, Freizeitgestaltung, Stadtentwicklung, Ortsentwicklung, Mentale Gesundheit, Mediennutzung.
+          - "Freizeitjunkies": Events (außer Sport), Hobbies, Urlaub/Reisen, Ausflüge, Ausgehen, Musik, Theater, Kino, Lifestyle.
+          - "Naturliebende": Nachhaltigkeit, Garten, Klimawandel, Tiere/Haustiere, Wald/Flur/Fluss/Teich/See.
+          - "Sportfans": Leistungssport, Spitzenteams, Ligabetrieb, Vereine, Sportevents.
+          - "Sporttreibende": Breitensport, Gesundheitssport, Fitness, Fitnessstudios, Vereine, Gesund bleiben, Gesund werden.
+          - "Voyeuristen": Polizei, Feuerwehr, Gericht/Justiz, Innere Sicherheit, Promis.
+          - "Nostalgiker": Stadtgeschichte, Ortsgeschichte, Persönlichkeiten, Archäologie.
 
-    MODELLBESCHREIBUNG: AUDIENCES
-    - "Foodies": Essengehen, Kochen, Backen, Trinken, Gastroszene, Lebensmittel, Agrar.
-    - "Gesundheitsbewusste": Kliniken, Ärzte, Krankheiten, Prävention, Behandlung, Medizintechnik, Gesund werden, Gesund bleiben.
-    - "Kunden und Arbeitnehmer": Firmen, Arbeitsmarkt, Geld, Start-ups, Geschäfte, Einkaufen, Innenstadt/Fußgängerzone.
-    - "Mieter und Hausbesitzer": Wohnungsbau, Hausbau, Architektur, Baugebiete, Geld/Steuern, Do-it-Yourself, Baumarkt, Einrichten und Wohnen, Parken.
-    - "Verkehrsteilnehmende": Auto, Fahrrad, Bahn, Bus, Fußgänger, Straßenbau/Baustellen, Parken, Innenstadt, Pendeln, Nachhaltigkeit.
-    - "Junge Familien": Schule, Kindergarten, Kinderbetreuung, Freizeitgestaltung, Stadtentwicklung, Ortsentwicklung, Mentale Gesundheit, Mediennutzung.
-    - "Freizeitjunkies": Events (außer Sport), Hobbies, Urlaub/Reisen, Ausflüge, Ausgehen, Musik, Theater, Kino, Lifestyle.
-    - "Naturliebende": Nachhaltigkeit, Garten, Klimawandel, Tiere/Haustiere, Wald/Flur/Fluss/Teich/See.
-    - "Sportfans": Leistungssport, Spitzenteams, Ligabetrieb, Vereine, Sportevents.
-    - "Sporttreibende": Breitensport, Gesundheitssport, Fitness, Fitnessstudios, Vereine, Gesund bleiben, Gesund werden.
-    - "Voyeuristen": Polizei, Feuerwehr, Gericht/Justiz, Innere Sicherheit, Promis.
-    - "Nostalgiker": Stadtgeschichte, Ortsgeschichte, Persönlichkeiten, Archäologie.
+      ANWEISUNG FÜR "audience_X_begruendung":
+          Ziel: Begründe für jede der drei ausgewählten Audiences in einem einzigen Satz, warum der Artikel für sie relevant ist.
+          Regeln:
+              - "audience_1_begruendung" muss sich auf den ersten Eintrag in der "audiences"-Liste beziehen.
+              - "audience_2_begruendung" muss sich auf den zweiten Eintrag in der "audiences"-Liste beziehen.
+              - "audience_3_begruendung" muss sich auf den dritten Eintrag in der "audiences"-Liste beziehen.
+              - Wenn eine Audience "Keine weitere" ist, soll die Begründung lauten: "Keine weitere relevante Audience identifiziert."
 
     **** Kodieranweisung 'audiences' ENDE ****
 
