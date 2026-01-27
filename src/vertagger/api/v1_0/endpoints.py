@@ -16,7 +16,7 @@ from typing import Annotated
 
 from fastapi import APIRouter, Depends, Request
 from openai import AsyncOpenAI
-
+import opik
 # Interne Importe, die die Datenstrukturen, die Geschäftslogik und die Konfiguration verbinden.
 from .models import ArticleInput, ArticleOutput
 from .services import ArticleService
@@ -44,11 +44,11 @@ OpenAIClientDep = Annotated[AsyncOpenAI, Depends(get_openai_client)]
 
 
 # Abhängigkeit 3.2: Holt den System-Prompt
-def get_system_prompt(request: Request) -> str:
-    """Holt den beim Start geladenen System-Prompt aus dem App-State."""
+def get_system_prompt(request: Request) -> opik.Prompt:
+    """Holt das beim Start erstellte Prompt-Objekt."""
     return request.app.state.system_prompt
 
-SystemPromptDep = Annotated[str, Depends(get_system_prompt)]
+SystemPromptDep = Annotated[opik.Prompt, Depends(get_system_prompt)]
 
 
 # Abhängigkeit 3.3: Erstellt den ArticleService

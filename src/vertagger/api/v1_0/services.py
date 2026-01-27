@@ -10,12 +10,13 @@ OpenAI-API zu kommunizieren und deren Ergebnisse zu validieren.
 
 # --- 1. Importe ---
 import json
-from typing import Optional
+from typing import Optional, List, cast
 
 from fastapi import HTTPException
 from openai import AsyncOpenAI, RateLimitError
-
+from openai.types.chat import ChatCompletionMessageParam
 # Opik wird für das Tracing und die Evaluierung der LLM-Aufrufe verwendet.
+import opik
 from opik import opik_context, track
 from opik.evaluation.metrics import IsJson
 
@@ -41,7 +42,7 @@ class ArticleService:
     """
     Kapselt die Logik zur Anreicherung eines Artikels mit Metadaten.
     """
-    def __init__(self, client: AsyncOpenAI, model: str, temperature: float, system_prompt: str):
+    def __init__(self, client: AsyncOpenAI, model: str, temperature: float, system_prompt: opik.Prompt):
         """
         Initialisiert den Service mit allen benötigten Abhängigkeiten.
 
@@ -122,38 +123,33 @@ class ArticleService:
     async def process_article(self, article_data: dict) -> dict:
         """
         Orchestriert den gesamten Prozess der Artikelverarbeitung.
-
-        Dies ist die öffentliche Hauptmethode des Services.
-
-        Args:
-            article_data: Ein Dictionary mit den Artikel-Daten aus der API-Anfrage.
-
-        Returns:
-            Ein Dictionary mit den validierten und angereicherten Metadaten.
-
-        Raises:
-            HTTPException: Bei Fehlern wie Rate-Limits, leeren Antworten oder
-                           fehlgeschlagener Validierung.
         """
-        
         # Schritt 1: Bereite den Input für das LLM vor.
         user_input_text = self._prepare_input_text(article_data)
 
-        # Schritt 2: Rufe die OpenAI Chat Completion API auf.
+        # Schritt 2: Nachrichten-Liste mit explizitem Casting vorbereiten
+        # Dies löst den Pylance-Fehler, da die Literale ("system", "user") 
+        # nun korrekt den TypedDicts zugeordnet werden.
+        messages: List[ChatCompletionMessageParam] = [
+            cast(ChatCompletionMessageParam, {
+                "role": "system", 
+                "content": self.system_prompt.format()
+            }),
+            cast(ChatCompletionMessageParam, {
+                "role": "user", 
+                "content": user_input_text
+            })
+        ]
+
+        # Schritt 3: Rufe die OpenAI Chat Completion API auf.
         try:
             response = await self.client.chat.completions.create(
                 model=self.model,
-                messages=[
-                    {"role": "system", "content": self.system_prompt},
-                    {"role": "user", "content": user_input_text}
-                ],
+                messages=messages,
                 temperature=self.temperature,
-                # Erzwingt, dass das LLM eine JSON-Antwort generiert.
                 response_format={"type": "json_object"}
             )
         except RateLimitError:
-            # Fange den spezifischen Fehler für Rate-Limits ab und gib einen
-            # passenden HTTP-Statuscode (429) zurück.
             raise HTTPException(status_code=429, detail="OpenAI Rate Limit überschritten.")
 
         result_str = response.choices[0].message.content

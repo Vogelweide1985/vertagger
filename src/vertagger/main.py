@@ -21,6 +21,8 @@ from pathlib import Path
 from fastapi import FastAPI
 from openai import AsyncOpenAI
 from opik.integrations.openai import track_openai
+# Importiere Prompt für das Prompt-Management
+from opik import Prompt
 
 # --- 2. Interne Anwendungs-Importe ---
 # Diese Importe verbinden die Teile unserer eigenen Anwendung miteinander.
@@ -93,12 +95,18 @@ async def lifespan(app: FastAPI):
     openai_client = track_openai(AsyncOpenAI(api_key=settings.openai_api_key))
     
     # Lade den System-Prompt einmalig, um I/O-Operationen während der Laufzeit zu vermeiden.
-    system_prompt = load_prompt_on_startup()
+    raw_system_prompt = load_prompt_on_startup()
+    opik_prompt = Prompt(
+        name="vertagger_system_prompt", 
+        prompt=raw_system_prompt
+    )
 
+    # 3. Das OBJEKT im State speichern (statt nur den String)
     # Speichere den Client und den Prompt im "State" der App.
     # Dadurch können sie über das `request`-Objekt in den API-Endpunkten abgerufen werden.
     app.state.openai_client = openai_client
-    app.state.system_prompt = system_prompt
+    app.state.system_prompt = opik_prompt
+
     
     # An dieser Stelle wird die Kontrolle an die laufende Anwendung übergeben.
     yield

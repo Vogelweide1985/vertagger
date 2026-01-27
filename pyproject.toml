@@ -30,7 +30,7 @@ dependencies = [
   "pydantic-settings",
   "openai",
   "opik",
-  "PyYAML"
+  "PyYAML",
 ]
 
 [project.optional-dependencies]
